@@ -108,4 +108,5 @@ class FERModel:
                 break
         print('Dominant emotion: %s' % dominant_emotion)
         print()
-        return results
+        resultlist = results + dominant_emotion
+        return resultlist.split(";")
