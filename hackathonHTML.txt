@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Game testing</h1>
+
+<p>In  this game you will do things</p>
+
+</body>
+</html>
