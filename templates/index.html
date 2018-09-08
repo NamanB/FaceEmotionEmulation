@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</head>
+<body>
+<style>
+    #retry {
+        display: none;
+    }
+    #score {
+        display: none;
+    }
+    #photo {
+        display: none;
+    }
+</style>
+
+
+<div class="container">
+    <h1 style="text-align:center">Can you face it?</h1>
+    <p>Hello, and welcome to Face Fetch! The objective of this game is simple: try and match the faces you see to your best ability. Here’s how it works:
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Take a look at the picture and mimic the facial expressions you see
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o Don’t like the picture you see? You can always press the “next photo” button for a fresh face
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Once you feel that your face is in the right position, press the “take photo”
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o If your photo doesn’t come out as well as you hoped, you can always press the “retry” button to go again, or even the “next photo” button to try a different face
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;o But if you’re satisfied with the results press the “score” button to see how close your photo is to the original. See if you can get 100%!
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• After scoring your photo, you can always press the “next photo” button to keep playing
+        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;• Good luck, and HAVE FUN!</p>
+</div>
+
+<div class="containter-fluid">
+    <div class="col-lg-6">
+        <img id="shownFace" src="https://i.pinimg.com/originals/41/2c/e0/412ce07cad422f67009122c1372cc1fe.jpg" alt="FaceToCopy" width="640" height="480" class="pull-left">
+    </div>
+
+    <video id="livePhoto" width="640" height="480" autoplay></video>
+    <canvas id="photo" width="640" height="480"></canvas>
+</div>
+
+<div class="col-xl-offset-5 col-lg-offset-5 col-md-5 col-s-5 col-xs-5">
+    <button id=takePhoto onclick="modeTaken()">Take Photo</button>
+    <button id=retry onclick="modeTake()">Retry</button>
+    <button id=score onclick="modeScored()">Score</button>
+    <button id=nextPhoto onclick="changeFace()">Next Photo</button>
+</div>
+<div class="col-xl-offset-5 col-lg-offset-5 col-md-5 col-s-5 col-xs-5">
+    <p>Score:</p>
+</div>
+
+<script>
+    var number=0;
+    var faces = ["https://i.pinimg.com/originals/41/2c/e0/412ce07cad422f67009122c1372cc1fe.jpg", "http://www.rmmagazine.com/wp-content/uploads/2012/08/Sad-Face.png", "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/4ZrVLdVKeijzurndz/people-emotion-and-facial-expression-concept-face-of-happy-smiling-young-man_hkvtvlv3_thumbnail-full05.png"];
+    function changeFace() {
+        number=number+1;
+        if(number==faces.length)
+        {
+            number=0;
+        }
+        document.getElementById('shownFace').src=faces[number];
+        modeTake();
+    }
+    function modeTake() {
+        document.getElementById("takePhoto").style.display = "inline-block";
+        document.getElementById("retry").style.display = "none";
+        document.getElementById("score").style.display = "none";
+        document.getElementById("photo").style.display = "none";
+        document.getElementById("livePhoto").style.display = "inline-block";
+    }
+    function modeTaken() {
+        document.getElementById("takePhoto").style.display = "none";
+        document.getElementById("retry").style.display = "inline-block";
+        document.getElementById("score").style.display = "inline-block";
+        document.getElementById("livePhoto").style.display = "none";
+        document.getElementById("photo").style.display = "inline-block";
+    }
+    function modeScored() {
+        document.getElementById("takePhoto").style.display = "none";
+        document.getElementById("retry").style.display = "none";
+        document.getElementById("score").style.display = "none";
+        document.getElementById("livePhoto").style.display = "none";
+        document.getElementById("photo").style.display = "inline-block";
+    }
+
+    var livePhoto = document.getElementById('livePhoto');
+
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+            livePhoto.src = window.URL.createObjectURL(stream);
+            livePhoto.play();
+        });
+    }
+
+    var photo = document.getElementById('photo');
+    var context = photo.getContext('2d');
+
+    document.getElementById("takePhoto").addEventListener("click", function() {
+        context.drawImage(livePhoto, 0, 0, 640, 480);
+    });
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+</script>
+</body>
+</html>

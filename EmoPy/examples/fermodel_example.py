@@ -26,49 +26,64 @@ models = [
     FERModel(target_emotions9, verbose=True),
 ]
 
-print('Predicting on happy image...')
-models[0].predict('image_data/sample_happy_image.png')
 
-print('Predicting on disgust image...')
-models[0].predict('image_data/sample_disgust_image.png')
-
-print('Predicting on anger image...')
-models[0].predict('image_data/sample_anger_image2.png')
-
-
-def get_score(filepath):
+def extract_data(filepath):
     print('Predicting on ' + filepath)
 
-#   format data
+    #   format data
     results = []
-    for i in range (len(models)):
+    for i in range(len(models)):
         datastrlist = models[i].predict(filepath)
         length = len(datastrlist)
         data = [datastrlist[length - 1]]
         for j in range(length - 1):
             data.append([datastrlist[j].split(": ")[0],
-                        float(datastrlist[j].split(": ")[1][:-1])
+                         float(datastrlist[j].split(": ")[1][:-1])
                          ])
         results.append(data)
 
-#   calculate score
-
-
     # for i in range(len(results)):
     #     for j in range(len(results[i])):
-            # max(results[i][j])
+    # max(results[i][j])
     print(str(results))
+    return results
 
 
+def get_score(result_a, result_b):
+    score = 0
+    for i in range(len(result_a)):
+        if result_a[i][0] == result_b[i][0]:
+            score += 100
+    return round(score / 9.0)
 
-fileA = 'image_data/Angry-face-man.jpg'
-get_score(fileA)
+
+def calculate_score(filepath_a, filepath_b):
+    return print(get_score(extract_data(filepath_a), extract_data(filepath_b)))
+
+# print('Predicting on happy image...')
+# models[0].predict('image_data/sample_happy_image.png')
+#
+# print('Predicting on disgust image...')
+# models[0].predict('image_data/sample_disgust_image.png')
+#
+# print('Predicting on anger image...')
+# models[0].predict('image_data/sample_anger_image2.png')
+
+
+# fileA = 'image_data/Angry-face-man.jpg'
+# fileAb = 'image_data/sample_anger_image2.png'
+# resultA = extract_data(fileA)
+# resultB = extract_data(fileAb)
+# print(get_score(resultA, resultB))
+
+calculate_score('image_data/AngryFace2.jpg', 'image_data/Sad-Face.png')
+
 #
 # fileB = 'image_data/AngryFace2.jpg'
-# get_score(fileB)
+# extract_data(fileB)
 #
 # fileC = 'image_data/Happyman.png'
-# get_score(fileC)
+# extract_data(fileC)
 #
 # fileD = 'image_data/Sad-Face.png'
 # get_score(fileD)

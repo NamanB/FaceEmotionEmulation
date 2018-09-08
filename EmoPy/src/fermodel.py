@@ -100,13 +100,13 @@ class FERModel:
         results = ""
         for emotion in self.emotion_map.keys():
             results += '%s: %.1f%%;' % (emotion, normalized_prediction[self.emotion_map[emotion]] * 100)
-            print('%s: %.1f%%' % (emotion, normalized_prediction[self.emotion_map[emotion]] * 100))
+            # print('%s: %.1f%%' % (emotion, normalized_prediction[self.emotion_map[emotion]] * 100))
         dominant_emotion_index = np.argmax(prediction)
         for emotion in self.emotion_map.keys():
             if dominant_emotion_index == self.emotion_map[emotion]:
                 dominant_emotion = emotion
                 break
-        print('Dominant emotion: %s' % dominant_emotion)
-        print()
+        # print('Dominant emotion: %s' % dominant_emotion)
+        # print()
         resultlist = results + dominant_emotion
         return resultlist.split(";")
