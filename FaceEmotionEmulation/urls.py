@@ -18,6 +18,6 @@ from django.urls import path
 from FaceEmotionEmulation.views import index
 
 urlpatterns = [
-    path('', index),
+    path('home/', index),
     path('admin/', admin.site.urls),
 ]
