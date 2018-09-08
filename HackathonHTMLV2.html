@@ -1,0 +1,82 @@
+﻿<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+</head>
+<body>
+<style>
+#retry {
+    display: none;
+}
+#score {
+    display: none;
+}
+#photo {
+    display: none;
+}
+</style>
+<h1 style="text-align:center">Can you face it?</h1>
+<p>In this game you will attempt to create the face shown in the picture below. The closer your face is to the actual face, the more points you get! Have fun facing!</p>
+
+<img id="shownFace" src="https://i.pinimg.com/originals/41/2c/e0/412ce07cad422f67009122c1372cc1fe.jpg" alt="FaceToCopy" width="640" height="480">
+<video id="livePhoto" width="640" height="480" autoplay></video>
+<canvas id="photo" width="640" height="480"></canvas>
+<button id=takePhoto onclick="modeTaken()">Take Photo</button>
+<button id=retry onclick="modeTake()">Retry</button>
+<button id=score onclick="modeScored()">Score</button>
+<button id=nextPhoto onclick="changeFace()">Next Photo</button>
+
+<script>
+var number=0;
+var faces = ["https://i.pinimg.com/originals/41/2c/e0/412ce07cad422f67009122c1372cc1fe.jpg", "http://www.rmmagazine.com/wp-content/uploads/2012/08/Sad-Face.png", "https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/4ZrVLdVKeijzurndz/people-emotion-and-facial-expression-concept-face-of-happy-smiling-young-man_hkvtvlv3_thumbnail-full05.png"];
+function changeFace() {
+    number=number+1;
+    if(number==faces.length)
+    {
+        number=0;
+    }
+    document.getElementById('shownFace').src=faces[number];
+    modeTake();
+}
+function modeTake() {
+    document.getElementById("takePhoto").style.display = "inline";
+    document.getElementById("retry").style.display = "none";
+    document.getElementById("score").style.display = "none";
+    document.getElementById("photo").style.display = "none";
+    document.getElementById("livePhoto").style.display = "inline";
+}
+function modeTaken() {
+    document.getElementById("takePhoto").style.display = "none";
+    document.getElementById("retry").style.display = "inline";
+    document.getElementById("score").style.display = "inline";
+    document.getElementById("livePhoto").style.display = "none";
+    document.getElementById("photo").style.display = "inline";
+}
+function modeScored() {
+    document.getElementById("takePhoto").style.display = "none";
+    document.getElementById("retry").style.display = "none";
+    document.getElementById("score").style.display = "none";
+    document.getElementById("livePhoto").style.display = "none";
+    document.getElementById("photo").style.display = "inline";
+}
+
+var livePhoto = document.getElementById('livePhoto');
+
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        livePhoto.src = window.URL.createObjectURL(stream);
+        livePhoto.play();
+    });
+}
+
+var photo = document.getElementById('photo');
+var context = photo.getContext('2d');
+
+document.getElementById("takePhoto").addEventListener("click", function() {
+	context.drawImage(livePhoto, 0, 0, 640, 480);
+});
+
+
+</script>
+
+<body>
+</html>
