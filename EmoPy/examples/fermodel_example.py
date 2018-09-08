@@ -3,6 +3,7 @@ sys.path.append('../')
 from EmoPy.src.fermodel import FERModel
 
 emotions = [['surprise', 0], ['happiness', 0], ['anger', 0], ['fear', 0], ['disgust', 0], ['calm', 0]]
+faces = ['image_data/angry.png','image_data/calm.png','image_data/disgust.png','image_data/fear.png','image_data/happiness.png','image_data/surprise.png']
 
 target_emotions = ['surprise', 'anger', 'fear', 'calm']
 target_emotions2 = ['surprise', 'disgust', 'happiness']
@@ -57,8 +58,8 @@ def get_score(result_a, result_b):
     return round(score / 9.0)
 
 
-def calculate_score(filepath_a, filepath_b):
-    return print(get_score(extract_data(filepath_a), extract_data(filepath_b)))
+def calculate_score(filepath_a, index):
+    return print(get_score(extract_data(filepath_a), extract_data(faces[index])))
 
 # print('Predicting on happy image...')
 # models[0].predict('image_data/sample_happy_image.png')
@@ -76,7 +77,7 @@ def calculate_score(filepath_a, filepath_b):
 # resultB = extract_data(fileAb)
 # print(get_score(resultA, resultB))
 
-calculate_score('image_data/AngryFace2.jpg', 'image_data/Sad-Face.png')
+# calculate_score('image_data/AngryFace2.jpg', 'image_data/Sad-Face.png')
 
 #
 # fileB = 'image_data/AngryFace2.jpg'
